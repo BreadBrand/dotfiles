@@ -1,5 +1,6 @@
 # ---- Basics / env -----------------------------------------------------------
 export EDITOR=nvim
+export SDL_VIDEODRIVER='wayland,x11'
 alias zshrc="$EDITOR $HOME/.zshrc"
 alias zsh="source $HOME/.zshrc"
 alias lsa="ls -a"
@@ -184,3 +185,5 @@ autoload -U colors && colors
 # Keep custom env last
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
+
+. "$HOME/.local/share/../bin/env"

@@ -134,6 +134,21 @@ return {
         capabilities = capabilities,
       }
 
+      vim.lsp.config.ts_ls = {
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        capabilities = capabilities,
+      }
+
+      vim.lsp.config.cssls = {
+        filetypes = { "css", "scss", "less" },
+        capabilities = capabilities,
+      }
+
+      vim.lsp.config.gopls = {
+        filetypes = { "go", "gomod", "gowork" },
+        capabilities = capabilities,
+      }
+
       require('mason-lspconfig').setup({
         ensure_installed = {},
         handlers = {
@@ -147,9 +162,10 @@ return {
               vim.lsp.config[server_name] = {}
             end
             -- Merge with capabilities
-            vim.lsp.config[server_name] = vim.tbl_deep_extend('force', vim.lsp.config[server_name], {
+            vim.lsp.config[server_name] = vim.tbl_deep_extend('force', vim.lsp.config[server_name] or {}, {
               capabilities = capabilities,
             })
+            vim.lsp.enable(server_name)
           end,
         }
       })
