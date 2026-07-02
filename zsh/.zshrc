@@ -187,3 +187,4 @@ autoload -U colors && colors
 
 
 . "$HOME/.local/share/../bin/env"
+export PATH="$HOME/.local/bin:$PATH"
