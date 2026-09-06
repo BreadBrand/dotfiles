@@ -2,7 +2,8 @@ vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
   { src = "https://github.com/rose-pine/neovim",                name = "rose-pine", },
   "https://github.com/nvim-mini/mini.nvim",
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter",             branch = "main" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
   "https://github.com/nvim-lualine/lualine.nvim",
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/mason-org/mason-lspconfig.nvim",
@@ -101,3 +102,33 @@ require("mini.git").setup()
 
 --- mini.pairs ---
 require("mini.pairs").setup()
+
+--- mini clue (which-key) ---
+local MiniClue = require("mini.clue")
+MiniClue.setup({
+  triggers = {
+    { mode = "n", keys = "<Leader>" },
+    { mode = "x", keys = "<Leader>" },
+    { mode = "n", keys = "g" },
+    { mode = "x", keys = "g" },
+    { mode = "n", keys = "'" },
+    { mode = "n", keys = "`" },
+    { mode = "x", keys = "'" },
+    { mode = "x", keys = "`" },
+    { mode = "i", keys = "<C-r>" },
+    { mode = "c", keys = "<C-r>" },
+    { mode = "n", keys = "z" },
+    { mode = "x", keys = "z" },
+  },
+  clues = {
+    MiniClue.gen_clues.builtin_completion(),
+    MiniClue.gen_clues.g(),
+    MiniClue.gen_clues.marks(),
+    MiniClue.gen_clues.registers(),
+    MiniClue.gen_clues.windows(),
+    MiniClue.gen_clues.z(),
+  },
+  window = {
+    config = { width = "auto" },
+  },
+})

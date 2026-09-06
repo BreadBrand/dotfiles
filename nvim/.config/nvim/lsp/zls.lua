@@ -1,0 +1,10 @@
+return {
+  settings = {
+    zls = {
+      enable_inlay_hints = true,
+      inlay_hints_show_variable_type_hints = true,
+      inlay_hints_show_parameter_name = true,
+      warn_style = true,
+    },
+  },
+}

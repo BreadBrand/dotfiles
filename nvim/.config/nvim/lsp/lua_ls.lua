@@ -31,6 +31,11 @@ return {
       diagnostics = {
         globals = { "vim" },
       },
+      hint = {
+        enable = true,
+        arrayIndex = "Auto",
+        setType = true,
+      },
     },
   },
 }

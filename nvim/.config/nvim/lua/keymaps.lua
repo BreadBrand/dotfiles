@@ -52,3 +52,7 @@ end, { expr = true, noremap = true })
 
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "go to definition" })
 vim.keymap.set("n", "<leader>vf", vim.lsp.buf.format, { desc = "format local buffer" })
+
+vim.keymap.set("n", "<leader>th", function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+end, { desc = "toggle inlay hints" })
