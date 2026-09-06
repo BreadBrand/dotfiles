@@ -104,7 +104,7 @@ MiniIcons.mock_nvim_web_devicons()
 --- mason ---
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman" },
+  ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman", "sqls" },
 })
 
 --- mini git ---
