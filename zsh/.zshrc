@@ -188,3 +188,7 @@ autoload -U colors && colors
 
 . "$HOME/.local/share/../bin/env"
 export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/home/bash/.lmstudio/bin"
+export PATH="/opt/rocm/bin:$PATH"
