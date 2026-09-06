@@ -27,7 +27,17 @@ require("mini.cmdline").setup({
 })
 
 --- mini surround ---
-require("mini.surround").setup()
+require("mini.surround").setup({
+  mappings = {
+    add = "gza",
+    delete = "gzd",
+    find = "gzf",
+    find_left = "gzF",
+    highlight = "gzh",
+    replace = "gzr",
+    update_n_lines = "gzn",
+  },
+})
 
 --- mini pick ---
 local MiniPick = require("mini.pick")
@@ -94,7 +104,7 @@ MiniIcons.mock_nvim_web_devicons()
 --- mason ---
 require("mason").setup()
 require("mason-lspconfig").setup({
-  ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls" },
+  ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman" },
 })
 
 --- mini git ---

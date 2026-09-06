@@ -64,9 +64,9 @@ vim.keymap.set({ "n", "x", "o" }, "]f", function() ts_move.goto_next_start("@fun
   { desc = "next function start" })
 vim.keymap.set({ "n", "x", "o" }, "[f", function() ts_move.goto_previous_start("@function.outer", "textobjects") end,
   { desc = "previous function start" })
-vim.keymap.set({ "n", "x", "o" }, "]c", function() ts_move.goto_next_start("@class.outer", "textobjects") end,
+vim.keymap.set({ "n", "x", "o" }, "]C", function() ts_move.goto_next_start("@class.outer", "textobjects") end,
   { desc = "next class start" })
-vim.keymap.set({ "n", "x", "o" }, "[c", function() ts_move.goto_previous_start("@class.outer", "textobjects") end,
+vim.keymap.set({ "n", "x", "o" }, "[C", function() ts_move.goto_previous_start("@class.outer", "textobjects") end,
   { desc = "previous class start" })
 
 vim.keymap.set("n", "<leader>a", function() ts_swap.swap_next("@parameter.inner") end,
