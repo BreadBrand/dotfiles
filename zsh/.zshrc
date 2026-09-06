@@ -192,3 +192,4 @@ export PATH="$HOME/.local/bin:$PATH"
 # Added by LM Studio CLI tool (lms)
 export PATH="$PATH:/home/bash/.lmstudio/bin"
 export PATH="/opt/rocm/bin:$PATH"
+export PATH=$PATH:$(go env GOPATH)/bin
