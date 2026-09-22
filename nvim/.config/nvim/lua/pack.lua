@@ -7,6 +7,7 @@ vim.pack.add({
   "https://github.com/nvim-lualine/lualine.nvim",
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/mason-org/mason-lspconfig.nvim",
+  "https://github.com/sphamba/smear-cursor.nvim",
 })
 
 require("rose-pine").setup()
@@ -112,6 +113,14 @@ require("mini.git").setup()
 
 --- mini.pairs ---
 require("mini.pairs").setup()
+
+--- smear cursor ---
+-- Ghostty renders the terminal cursor using its own theme color rather than
+-- Neovim's Cursor highlight, so set it explicitly to match (rose-pine text
+-- color, from ~/.local/state/omarchy/current/theme/ghostty.conf).
+require("smear_cursor").setup({
+  cursor_color = "#e0def4",
+})
 
 --- mini clue (which-key) ---
 local MiniClue = require("mini.clue")
