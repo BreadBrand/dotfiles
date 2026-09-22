@@ -13,7 +13,6 @@ vim.pack.add({
 require("rose-pine").setup()
 vim.cmd.colorscheme("rose-pine")
 
---- mini notify ---
 require("mini.notify").setup({
   content = {
     format = function(notify)
@@ -22,12 +21,10 @@ require("mini.notify").setup({
   },
 })
 
---- mini cmdline completion ---
 require("mini.cmdline").setup({
   autocorrect = { enable = false }
 })
 
---- mini surround ---
 require("mini.surround").setup({
   mappings = {
     add = "gza",
@@ -40,11 +37,9 @@ require("mini.surround").setup({
   },
 })
 
---- mini pick ---
 local MiniPick = require("mini.pick")
 local MiniExtra = require("mini.extra")
 
--- Centered on screen
 local win_config = function()
   local height = math.floor(0.618 * vim.o.lines)
   local width = math.floor(0.618 * vim.o.columns)
@@ -73,7 +68,6 @@ vim.keymap.set("n", "<leader>fr", function() MiniPick.builtin.resume() end, { de
 vim.keymap.set("n", "<leader>xx", function() MiniExtra.pickers.diagnostic() end, { desc = "mini diagnostic picker" })
 vim.keymap.set("n", "<leader>fk", function() MiniExtra.pickers.keymaps() end, { desc = "mini keymap picker" })
 
---- mini completion ---
 local MiniCompletion = require("mini.completion")
 MiniCompletion.setup({
   lsp_completion = {
@@ -93,36 +87,26 @@ local capabilities = vim.tbl_deep_extend(
 
 vim.lsp.config("*", { capabilities = capabilities })
 
---- mini diff ---
 local MiniDiff = require("mini.diff")
 MiniDiff.setup()
 
---- mini icons ---
 local MiniIcons = require("mini.icons")
 MiniIcons.setup()
 MiniIcons.mock_nvim_web_devicons()
 
---- mason ---
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman", "sqls" },
 })
 
---- mini git ---
 require("mini.git").setup()
 
---- mini.pairs ---
 require("mini.pairs").setup()
 
---- smear cursor ---
--- Ghostty renders the terminal cursor using its own theme color rather than
--- Neovim's Cursor highlight, so set it explicitly to match (rose-pine text
--- color, from ~/.local/state/omarchy/current/theme/ghostty.conf).
 require("smear_cursor").setup({
   cursor_color = "#e0def4",
 })
 
---- mini clue (which-key) ---
 local MiniClue = require("mini.clue")
 MiniClue.setup({
   triggers = {

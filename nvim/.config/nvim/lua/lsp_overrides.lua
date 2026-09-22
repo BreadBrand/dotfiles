@@ -1,18 +1,6 @@
--- Explicit vim.lsp.config() calls always take precedence over lsp/*.lua
--- files found on the runtimepath, regardless of load order. This matters
--- because vim.pack.add() appends plugins to 'runtimepath' after this
--- config dir, so nvim-lspconfig's own lsp/sqls.lua (root_markers =
--- {'config.yml'}) was clobbering our lsp/sqls.lua override entirely.
 local data_source = os.getenv("SQLS_DATA_SOURCE")
 local root_markers = { '.sqls.yml', '.git' }
 
--- sqls has no built-in support for auto-loading a project-local .sqls.yml:
--- it only reads config via -config, a global ~/.config/sqls/config.yml, or
--- connections pushed by the client through workspace/didChangeConfiguration
--- (see sqls internal/handler/handler.go). root_markers only gets sqls's
--- root_dir pointed at the right directory; it doesn't make sqls read the
--- file there. So when there's no SQLS_DATA_SOURCE override, parse the
--- project's .sqls.yml ourselves and push it the same way.
 local function read_sqls_connections(path)
   local f = io.open(path, "r")
   if not f then return nil end

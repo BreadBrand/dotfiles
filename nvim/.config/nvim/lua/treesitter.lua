@@ -27,7 +27,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
---- treesitter textobjects ---
 require("nvim-treesitter-textobjects").setup({
   select = {
     lookahead = true,

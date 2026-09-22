@@ -39,10 +39,8 @@ vim.keymap.set("n", "<leader>nv", "<C-w><C-v>", { desc = "open a vert split" })
 vim.keymap.set("i", "<CR>", function()
   if vim.fn.pumvisible() == 1 then
     if vim.fn.complete_info().selected == -1 then
-      -- Nothing selected yet — select first item, then accept it
       return "<C-n><C-y>"
     else
-      -- Something already selected — just accept it
       return "<C-y>"
     end
   else
