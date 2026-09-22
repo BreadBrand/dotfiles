@@ -16,6 +16,7 @@ vim.api.nvim_create_user_command("PackUp", function(opts)
   end
 end, { nargs = "*", desc = "update all plugins or specified ones" })
 
+--- auto-check for plugin updates, throttled to once per day ---
 local function pack_autoupdate()
   local stamp_path = vim.fn.stdpath("state") .. "/pack_update_stamp"
   local one_day = 24 * 60 * 60
