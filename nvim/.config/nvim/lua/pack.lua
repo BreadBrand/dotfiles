@@ -140,6 +140,7 @@ MiniClue.setup({
     { mode = "x", keys = "z" },
   },
   clues = {
+    { mode = "n", keys = "<Leader>d", desc = "+Debug" },
     MiniClue.gen_clues.builtin_completion(),
     MiniClue.gen_clues.g(),
     MiniClue.gen_clues.marks(),
