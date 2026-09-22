@@ -8,6 +8,10 @@ vim.pack.add({
   "https://github.com/mason-org/mason.nvim",
   "https://github.com/mason-org/mason-lspconfig.nvim",
   "https://github.com/sphamba/smear-cursor.nvim",
+  "https://github.com/mfussenegger/nvim-dap",
+  "https://github.com/igorlfs/nvim-dap-view",
+  "https://github.com/leoluz/nvim-dap-go",
+  "https://github.com/jay-babu/mason-nvim-dap.nvim",
 })
 
 require("rose-pine").setup()
