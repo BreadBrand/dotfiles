@@ -39,6 +39,19 @@ install_font_if_missing() {
   fi
 }
 
+install_deja() {
+  if command -v deja >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "⚡ Installing deja (zsh predictive suggestions)..."
+  if command -v brew >/dev/null 2>&1; then
+    brew install Giammarco-Ferranti/deja/deja
+  else
+    curl -fsSL https://raw.githubusercontent.com/Giammarco-Ferranti/deja/main/install.sh | sh
+  fi
+}
+
 # --- Install core packages -------------------------------------------------
 
 install_if_missing zsh
@@ -54,6 +67,9 @@ install_if_missing ripgrep
 install_if_missing ghostty || true
 
 install_font_if_missing ttf-cascadia-code-nerd font-caskaydia-cove-nerd-font "CaskaydiaCove Nerd Font"
+
+# deja is optional; .zshrc falls back to zsh-autosuggestions when it's missing.
+install_deja || true
 
 # --- Change login shell to Zsh if needed ----------------------------------
 
@@ -75,6 +91,9 @@ fi
 # --- Apply dotfiles via stow ----------------------------------------------
 
 cd ~/dotfiles
+
+echo "🧩 Fetching git submodules (zsh-autosuggestions, zsh-syntax-highlighting)..."
+git submodule update --init --recursive
 
 echo "🔗 Stowing dotfiles..."
 stow -D zsh 2>/dev/null || true
