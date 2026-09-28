@@ -44,7 +44,7 @@ vim.keymap.set("i", "<CR>", function()
       return "<C-y>"
     end
   else
-    return "<CR>"
+    return require("mini.pairs").cr()
   end
 end, { expr = true, noremap = true })
 
