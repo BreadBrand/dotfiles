@@ -31,6 +31,35 @@ vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "go to lower split" })
 vim.keymap.set("n", "<leader>k", "<C-w>k", { desc = "go to upper split" })
 vim.keymap.set("n", "<leader>l", "<C-w>l", { desc = "go to right split" })
 
+vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "go to left split" })
+vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "go to lower split" })
+vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { desc = "go to upper split" })
+vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { desc = "go to right split" })
+
+vim.keymap.set("t", "jj", [[<C-\><C-n>]], { desc = "exit terminal mode" })
+
+vim.keymap.set("n", "<C-Up>", ":resize +2<CR>", { desc = "increase split height" })
+vim.keymap.set("n", "<C-Down>", ":resize -2<CR>", { desc = "decrease split height" })
+vim.keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "decrease split width" })
+vim.keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "increase split width" })
+
+vim.keymap.set("t", "<C-Up>", [[<C-\><C-n>:resize +2<CR>]], { desc = "increase split height" })
+vim.keymap.set("t", "<C-Down>", [[<C-\><C-n>:resize -2<CR>]], { desc = "decrease split height" })
+vim.keymap.set("t", "<C-Left>", [[<C-\><C-n>:vertical resize -2<CR>]], { desc = "decrease split width" })
+vim.keymap.set("t", "<C-Right>", [[<C-\><C-n>:vertical resize +2<CR>]], { desc = "increase split width" })
+
+vim.keymap.set("n", "<leader>tv", function()
+  vim.cmd.vsplit()
+  vim.cmd.terminal()
+  vim.cmd.startinsert()
+end, { desc = "open terminal in vertical split" })
+
+vim.keymap.set("n", "<leader>ts", function()
+  vim.cmd.split()
+  vim.cmd.terminal()
+  vim.cmd.startinsert()
+end, { desc = "open terminal in horizontal split" })
+
 vim.keymap.set("n", "<leader>wo", "<C-w>o", { desc = "close all non-active buffers" })
 vim.keymap.set("n", "<leader>nx", "<C-w>q", { desc = "close active window" })
 
