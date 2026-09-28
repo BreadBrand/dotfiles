@@ -4,8 +4,8 @@ theme = Rose Pine
 config-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"
 
 # Font
-# font-family = "MesloLGL Nerd Font"
-font-family = MesloLGS Nerd Font
+# font-family = "MesloLGS Nerd Font"
+font-family = CaskaydiaCove Nerd Font
 font-style = Regular
 font-size = 12
 
