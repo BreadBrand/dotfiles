@@ -175,8 +175,17 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
 [ -f '/Users/bravo/Downloads/google-cloud-sdk/path.zsh.inc' ] && . '/Users/bravo/Downloads/google-cloud-sdk/path.zsh.inc'
 [ -f '/Users/bravo/Downloads/google-cloud-sdk/completion.zsh.inc' ] && . '/Users/bravo/Downloads/google-cloud-sdk/completion.zsh.inc'
 
-# ---- Plugins (order matters: autosuggestions, then highlighting last) -------
-source ~/dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+# ---- Plugins (order matters: suggestions, then highlighting last) -----------
+if command -v deja >/dev/null 2>&1; then
+  export DEJA_CYCLE_KEY='^[[Z'   # Shift+Tab for alternatives picker; keep Tab for completion/fzf
+  if [[ -r "$HOME/.local/share/deja/init.zsh" ]]; then
+    source "$HOME/.local/share/deja/init.zsh"
+  else
+    eval "$(deja init zsh)"
+  fi
+else
+  source ~/dotfiles/zsh/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 source ~/dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Optional: colors available for scripts that need them (doesn't set PS1)
