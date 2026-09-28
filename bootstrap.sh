@@ -21,6 +21,24 @@ install_if_missing() {
   fi
 }
 
+install_font_if_missing() {
+  local pacman_pkg="$1"
+  local brew_cask="$2"
+  local family="$3"
+
+  if fc-list 2>/dev/null | grep -qi "$family"; then
+    return
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    echo "🔤 Installing $family via brew..."
+    brew install --cask "$brew_cask"
+  elif command -v pacman >/dev/null 2>&1; then
+    echo "🔤 Installing $family via pacman..."
+    sudo pacman -S --needed "$pacman_pkg"
+  fi
+}
+
 # --- Install core packages -------------------------------------------------
 
 install_if_missing zsh
@@ -34,6 +52,8 @@ install_if_missing ripgrep
 # Ghostty is usually not in pacman official repos.
 # If you're using the Ghostty binary release, keep this in:
 install_if_missing ghostty || true
+
+install_font_if_missing ttf-cascadia-code-nerd font-caskaydia-cove-nerd-font "CaskaydiaCove Nerd Font"
 
 # --- Change login shell to Zsh if needed ----------------------------------
 
