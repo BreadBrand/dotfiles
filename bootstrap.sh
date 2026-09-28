@@ -26,16 +26,16 @@ install_font_if_missing() {
   local brew_cask="$2"
   local family="$3"
 
-  if fc-list 2>/dev/null | grep -qi "$family"; then
-    return
-  fi
-
   if command -v brew >/dev/null 2>&1; then
-    echo "🔤 Installing $family via brew..."
-    brew install --cask "$brew_cask"
+    if ! brew list --cask "$brew_cask" >/dev/null 2>&1; then
+      echo "🔤 Installing $family via brew..."
+      brew install --cask "$brew_cask"
+    fi
   elif command -v pacman >/dev/null 2>&1; then
-    echo "🔤 Installing $family via pacman..."
-    sudo pacman -S --needed "$pacman_pkg"
+    if ! pacman -Qi "$pacman_pkg" >/dev/null 2>&1; then
+      echo "🔤 Installing $family via pacman..."
+      sudo pacman -S --needed "$pacman_pkg"
+    fi
   fi
 }
 
