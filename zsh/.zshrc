@@ -1,10 +1,14 @@
 # ---- Basics / env -----------------------------------------------------------
 export EDITOR=nvim
-export SDL_VIDEODRIVER='wayland,x11'
 alias zshrc="$EDITOR $HOME/.zshrc"
-alias zsh="source $HOME/.zshrc"
-alias lsa="ls -a"
+alias reload="source $HOME/.zshrc"
 alias vim="nvim"
+
+# OS-specific setup (Homebrew PATH, Linux-only env). Loaded early so later tools are on PATH.
+case "$OSTYPE" in
+  darwin*) source ~/dotfiles/zsh/.zsh/macos.zsh ;;
+  linux*) source ~/dotfiles/zsh/.zsh/linux.zsh ;;
+esac
 
 # History
 HISTSIZE=10000
@@ -87,45 +91,6 @@ alias grs='git restore'
 alias gst='git stash'
 alias gstp='git stash pop'
 
-#Domo specific alias'
-gcod() {
-  if [ -z "$1" ]; then
-    echo "Error: Please provide a ticket number. Usage: gcod <TICKET_NUMBER>"
-    return 1
-  fi
-  git checkout users/brandon.bashein/$1
-}
-gcbd() {
-  if [ -z "$1" ]; then
-    echo "Error: Please provide a ticket number. Usage: gcb <TICKET_NUMBER>"
-    return 1
-  fi
-  git checkout -b users/brandon.bashein/$1
-}
-gpud() {
-  if [ -z "$1" ]; then
-    echo "Error: Please provide a ticket number. Usage: gpud <TICKET_NUMBER>"
-    return 1
-  fi
-  git push --set-upstream origin users/brandon.bashein/$1
-}
-gbdd() {
-  git branch | grep '^\s*users' | xargs -r git branch -d 
-}
-
-alias domorun='pnpm start --watchI18n --proxy="https://*.domo.com" --port=80 --skip-translations --noTypeCheck'
-alias domoruntypecheck='pnpm start --watchI18n --proxy="https://*.domo.com" --port=80 --skip-translations'
-alias runoldbranch='./runPnpm start --watchI18n --proxy"https://*.domo.com" --port=80 --skip-translations --noTypeCheck'
-
-alias embedrun='pnpm start --gateway https://api.dev.domo.com'
-
-export PNPM_HOME="/Users/brandon.bashein/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# End Domo specific alias'
-
 # ---------- Filesystem ----------
 alias ls='eza -lh --group-directories-first --icons=auto'
 alias lsa='ls -a'
@@ -156,25 +121,6 @@ fzf_z() {
 zle -N fzf_z
 bindkey '^[c' fzf_z
 
-# ---------- Fuzzy File Picker -------------------
-bindkey '^T' fzf-file-widget
-
-# open files with system default app
-open() {
-  xdg-open "$@" >/dev/null 2>&1 &
-}
-
-# Your env vars / SDKs (keep as needed)
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/bravo/.config/bread-machine-a72fa-6bbf07870e8b.json"
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
-
-# Google Cloud SDK
-[ -f '/Users/bravo/Downloads/google-cloud-sdk/path.zsh.inc' ] && . '/Users/bravo/Downloads/google-cloud-sdk/path.zsh.inc'
-[ -f '/Users/bravo/Downloads/google-cloud-sdk/completion.zsh.inc' ] && . '/Users/bravo/Downloads/google-cloud-sdk/completion.zsh.inc'
-
 # ---- Plugins (order matters: suggestions, then highlighting last) -----------
 if command -v deja >/dev/null 2>&1; then
   export DEJA_CYCLE_KEY='^[[Z'   # Shift+Tab for alternatives picker; keep Tab for completion/fzf
@@ -193,12 +139,16 @@ autoload -U colors && colors
 
 # Keep custom env last
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
-
-
-. "$HOME/.local/share/../bin/env"
 export PATH="$HOME/.local/bin:$PATH"
 
-# Added by LM Studio CLI tool (lms)
-export PATH="$PATH:/home/bash/.lmstudio/bin"
-export PATH="/opt/rocm/bin:$PATH"
-export PATH=$PATH:$(go env GOPATH)/bin
+# mise: node, go, zig, tree-sitter, claude, herdr (see ~/.config/mise/config.toml)
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
+command -v go >/dev/null 2>&1 && export PATH="$PATH:$(go env GOPATH)/bin"
+
+# Secrets and machine-only settings. Lives outside the repo, so never committed.
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi

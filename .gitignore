@@ -1,0 +1,4 @@
+# Keep secrets out of this public repo
+*.local
+.env
+.env.*
