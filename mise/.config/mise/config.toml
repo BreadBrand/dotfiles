@@ -6,8 +6,11 @@ zig = "latest"
 # CLI nvim-treesitter uses to build parsers
 tree-sitter = "latest"
 claude = "latest"
-herdr = "latest"
+codex = "latest"
 
 [settings]
 # Skip releases younger than this, so a compromised release has time to be caught.
 minimum_release_age = "3d"
+
+[settings.upgrade]
+auto_prune = false
