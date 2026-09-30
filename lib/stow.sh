@@ -9,10 +9,11 @@ stow_package() {
   local pkg="$1"
   local conflicts target backup
 
+  # The dry run exits non-zero when it finds conflicts; don't let pipefail/set -e abort here.
   conflicts="$(stow -n -R -t ~ "$pkg" 2>&1 |
     sed -nE \
       -e 's/.*over existing target (.+) since neither a link nor a directory.*/\1/p' \
-      -e 's/.*existing target is neither a link nor a directory: (.+)$/\1/p')"
+      -e 's/.*existing target is neither a link nor a directory: (.+)$/\1/p' || true)"
 
   while IFS= read -r target; do
     [ -n "$target" ] || continue
