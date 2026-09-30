@@ -78,11 +78,12 @@ ends up in the repo by mistake.
 ## Updating
 
 ```bash
-./update.sh               # pull, restow, upgrade system + mise tools, update nvim plugins/parsers/Mason
+./update.sh               # pull, restow, install/upgrade system + mise tools, update nvim plugins/parsers/Mason
 ./update.sh --skip-system # same, without the pacman/brew upgrade
 ```
 
 Config edits show up as soon as you pull, since everything is symlinked. `update.sh`
-also takes care of the parts a pull doesn't cover: new packages to link, and updates for
-plugins and system packages. If `nvim/.config/nvim/nvim-pack-lock.json` changes, commit
-it so other machines get the same plugin versions.
+also covers what a pull doesn't: linking new packages, installing anything newly added
+to the install lists or mise config, and updating plugins and packages. If
+`nvim/.config/nvim/nvim-pack-lock.json` changes, commit it so other machines get the
+same plugin versions.

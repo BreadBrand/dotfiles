@@ -33,16 +33,21 @@ stow_all
 
 # --- System packages -------------------------------------------------------
 
+# Reuse bootstrap's install scripts so packages added to them since the last run get
+# installed here too, not just on fresh machines.
 if [ "$SKIP_SYSTEM" = false ]; then
-  if command -v brew >/dev/null 2>&1; then
-    echo "📦 Upgrading brew packages..."
-    brew update
-    brew upgrade
-  elif command -v pacman >/dev/null 2>&1; then
-    # Arch doesn't support partial upgrades, so upgrade the whole system.
-    echo "📦 Upgrading system packages via pacman..."
-    sudo pacman -Syu
-  fi
+  case "$(uname -s)" in
+    Darwin)
+      . ./lib/install-macos.sh
+      echo "📦 Upgrading brew packages..."
+      brew update
+      brew upgrade
+      ;;
+    Linux)
+      # pacman -Syu in here upgrades the whole system too
+      . ./lib/install-arch.sh
+      ;;
+  esac
 else
   echo "⏭️  Skipping system package upgrades."
 fi
@@ -50,7 +55,9 @@ fi
 # --- mise tools ------------------------------------------------------------
 
 if command -v mise >/dev/null 2>&1; then
-  echo "🧰 Upgrading mise tools..."
+  echo "🧰 Installing and upgrading mise tools..."
+  # install picks up tools newly added to the config; upgrade only touches installed ones
+  mise install
   mise upgrade
   # put mise's go/node on PATH so Mason can build gopls, sqls, etc. below
   eval "$(mise activate bash --shims)"
