@@ -2,6 +2,8 @@ theme = Rose Pine
 
 # Dynamic theme colors
 config-file = ?"~/.local/state/omarchy/current/theme/ghostty.conf"
+# Older Omarchy versions keep the theme here instead
+config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
 
 # Font
 # font-family = "MesloLGS Nerd Font"
