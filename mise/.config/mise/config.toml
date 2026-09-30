@@ -1,0 +1,13 @@
+# Global tool versions. Projects can override these with their own mise.toml.
+[tools]
+node = "lts"
+go = "latest"
+zig = "latest"
+# CLI nvim-treesitter uses to build parsers
+tree-sitter = "latest"
+claude = "latest"
+herdr = "latest"
+
+[settings]
+# Skip releases younger than this, so a compromised release has time to be caught.
+minimum_release_age = "3d"
