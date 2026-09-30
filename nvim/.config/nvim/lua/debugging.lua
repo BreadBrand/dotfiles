@@ -1,5 +1,5 @@
 require("mason-nvim-dap").setup({
-  ensure_installed = { "delve", "js-debug-adapter" },
+  ensure_installed = { "delve", "js" },
 })
 
 require("dap-go").setup()

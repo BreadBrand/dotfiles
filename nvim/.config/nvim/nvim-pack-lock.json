@@ -1,13 +1,5 @@
 {
   "plugins": {
-    "everforest": {
-      "rev": "85a86eb62409e3ec88713bff3d1b9d7374e112e4",
-      "src": "https://github.com/sainnhe/everforest.git"
-    },
-    "everforest-nvim": {
-      "rev": "a0e9edc57379e8feafc6ba207c26dbb12fc1b6d8",
-      "src": "https://github.com/neanias/everforest-nvim"
-    },
     "lualine.nvim": {
       "rev": "221ce6b2d999187044529f49da6554a92f740a96",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -57,7 +49,7 @@
       "src": "https://github.com/rose-pine/neovim"
     },
     "smear-cursor.nvim": {
-      "rev": "af2e5325760abbdc121ac5a963c8d8ceaa28552a",
+      "rev": "9f42dd38bea7f00cee52544b168a81dc2fbf57c3",
       "src": "https://github.com/sphamba/smear-cursor.nvim"
     }
   }
