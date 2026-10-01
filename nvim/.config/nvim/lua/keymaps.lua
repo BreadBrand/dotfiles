@@ -83,3 +83,10 @@ vim.keymap.set("n", "<leader>vf", vim.lsp.buf.format, { desc = "format local buf
 vim.keymap.set("n", "<leader>th", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end, { desc = "toggle inlay hints" })
+
+vim.keymap.set("n", "<leader>mr", "<cmd>RenderMarkdown buf_toggle<cr>", { desc = "toggle markdown render" })
+
+vim.keymap.set("n", "<leader>tw", function()
+  vim.wo.wrap = not vim.wo.wrap
+  vim.wo.linebreak = vim.wo.wrap
+end, { desc = "toggle wrap" })

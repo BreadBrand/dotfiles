@@ -12,6 +12,7 @@ vim.pack.add({
   "https://github.com/igorlfs/nvim-dap-view",
   "https://github.com/leoluz/nvim-dap-go",
   "https://github.com/jay-babu/mason-nvim-dap.nvim",
+  "https://github.com/MeanderingProgrammer/render-markdown.nvim",
 })
 
 require("rose-pine").setup()
@@ -110,6 +111,9 @@ require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman", "sqls" },
 })
+
+--- render markdown ---
+require("render-markdown").setup({})
 
 --- mini git ---
 require("mini.git").setup()
