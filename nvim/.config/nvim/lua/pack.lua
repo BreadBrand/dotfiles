@@ -13,9 +13,14 @@ vim.pack.add({
   "https://github.com/leoluz/nvim-dap-go",
   "https://github.com/jay-babu/mason-nvim-dap.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
+  "https://github.com/stevearc/oil.nvim",
 })
 
-require("rose-pine").setup()
+require("rose-pine").setup({
+  highlight_groups = {
+    FloatBorder = { fg = "rose" },
+  },
+})
 vim.cmd.colorscheme("rose-pine")
 
 --- mini notify ---
@@ -110,6 +115,14 @@ MiniIcons.mock_nvim_web_devicons()
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = { "lua_ls", "ts_ls", "zls", "gopls", "marksman", "sqls" },
+})
+
+--- oil (file explorer, replaces netrw; also handles oil-ssh:// and oil-s3://) ---
+require("oil").setup({
+  default_file_explorer = true,
+  delete_to_trash = true,
+  view_options = { show_hidden = true },
+  float = { border = "rounded" },
 })
 
 --- render markdown ---

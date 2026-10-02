@@ -24,7 +24,8 @@ vim.keymap.set("n", "<leader>u", function()
   require("undotree").open()
 end, { desc = "toggle builtin undotree" })
 
-vim.keymap.set("n", "<leader>e", ":Ex<CR>", { desc = "go to netrw" })
+vim.keymap.set("n", "<leader>e", "<cmd>Oil<CR>", { desc = "oil file explorer" })
+vim.keymap.set("n", "<leader>E", "<cmd>Oil --float<CR>", { desc = "oil floating file explorer" })
 
 vim.keymap.set("n", "<leader>h", "<C-w>h", { desc = "go to left split" })
 vim.keymap.set("n", "<leader>j", "<C-w>j", { desc = "go to lower split" })
