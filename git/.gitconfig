@@ -3,3 +3,7 @@
 [user]
 	name = Brandon Bashein
 	email = b2randon@gmail.com
+[diff]
+	tool = nvimdiff
+[difftool]
+	prompt = false

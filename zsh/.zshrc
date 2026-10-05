@@ -121,6 +121,11 @@ fzf_z() {
 zle -N fzf_z
 bindkey '^[c' fzf_z
 
+vf() {
+  local f
+  f=$(fd "${1:-$HOME}" -type f -iname "*${2}*" 2>/dev/null | fzf) && vim "$f"
+}
+
 # ---- Plugins (order matters: suggestions, then highlighting last) -----------
 if command -v deja >/dev/null 2>&1; then
   export DEJA_CYCLE_KEY='^[[Z'   # Shift+Tab for alternatives picker; keep Tab for completion/fzf
@@ -136,6 +141,9 @@ source ~/dotfiles/zsh/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Optional: colors available for scripts that need them (doesn't set PS1)
 autoload -U colors && colors
+
+# custom command menus
+export PATH="$HOME/.local/bin/mine:$PATH"
 
 # Keep custom env last
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
