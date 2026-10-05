@@ -123,7 +123,7 @@ bindkey '^[c' fzf_z
 
 vf() {
   local f
-  f=$(fd "${1:-$HOME}" -type f -iname "*${2}*" 2>/dev/null | fzf) && vim "$f"
+  f=$(fd --type f --hidden "${2:-.}" "${1:-$HOME}" | fzf) && vim "$f"
 }
 
 # ---- Plugins (order matters: suggestions, then highlighting last) -----------
