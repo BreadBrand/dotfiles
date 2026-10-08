@@ -14,6 +14,7 @@ vim.pack.add({
   "https://github.com/jay-babu/mason-nvim-dap.nvim",
   "https://github.com/MeanderingProgrammer/render-markdown.nvim",
   "https://github.com/stevearc/oil.nvim",
+  "https://github.com/folke/snacks.nvim",
 })
 
 require("rose-pine").setup({
@@ -127,6 +128,17 @@ require("oil").setup({
 
 --- render markdown ---
 require("render-markdown").setup({})
+
+--- snacks images and mermaid ---
+require("snacks").setup({
+  image = {
+    enabled = true,
+    doc = {
+      enabled = true,
+      inline = true,
+    },
+  },
+})
 
 --- mini git ---
 require("mini.git").setup()
