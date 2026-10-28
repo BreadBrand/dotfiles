@@ -40,6 +40,14 @@ rex.bind("shift+cmd+d", "pane.split", { direction = "down" })
 rex.bind("cmd+e",       "pane.zoom")
 rex.bind("cmd+w",       "pane.close")
 
+-- Move focus between panes, vim-style. Without these, a split is reachable only
+-- by mouse -- which is the whole point when Claude Code sits in one pane and a
+-- shell in another. `pane.focus` takes direction + optional wrap.
+rex.bind("cmd+alt+h", "pane.focus", { direction = "left" })
+rex.bind("cmd+alt+j", "pane.focus", { direction = "down" })
+rex.bind("cmd+alt+k", "pane.focus", { direction = "up" })
+rex.bind("cmd+alt+l", "pane.focus", { direction = "right" })
+
 -- Tabs 1-5 (physical keys, so they work on any layout)
 for i = 1, 5 do
   rex.bind("cmd+[Digit" .. i .. "]", "client.tab.goto", { index = i })
@@ -93,7 +101,7 @@ rex.action{
   name     = "domoweb",
   title    = "Open DomoWeb Workspace",
   category = "Workflow",
-  keywords = { "domo", "domoweb", "pnpm", "dev server", "work" },
+  keywords = "domo domoweb pnpm dev server work",
   args     = { dir = "string?", cmd = "string?", ratio = "number?", claude = "boolean?" },
   run      = function(ctx, args)
     local dir   = args.dir or DOMOWEB_DIR
@@ -124,7 +132,7 @@ rex.action{
   name     = "claude_pair",
   title    = "Open Claude Code Pair",
   category = "Workflow",
-  keywords = { "ai", "claude", "agent" },
+  keywords = "ai claude agent",
   args     = { dir = "string?", ratio = "number?" },
   run      = function(ctx, args)
     local dir = args.dir or os.getenv("PWD") or HOME
@@ -162,7 +170,7 @@ rex.action{
   name     = "focus_mode",
   title    = "Focus Mode",
   category = "Workflow",
-  keywords = { "present", "share", "interview" },
+  keywords = "present share interview",
   run      = function(ctx, args)
     rex.client.queue("pane.zoom")
     rex.client.queue("client.sidebar.toggle")
