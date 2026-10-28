@@ -3,6 +3,7 @@ export EDITOR=nvim
 alias zshrc="$EDITOR $HOME/.zshrc"
 alias reload="source $HOME/.zshrc"
 alias vim="nvim"
+alias v8="node --allow-natives-syntax "
 
 # OS-specific setup (Homebrew PATH, Linux-only env). Loaded early so later tools are on PATH.
 case "$OSTYPE" in
@@ -60,6 +61,55 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
+
+# ---- vi-mode yank to the system clipboard -----------------------------------
+# zsh ships the `visual` keymap with no `y` binding, so V then y does nothing.
+# And vi-yank only fills zsh's internal cutbuffer, which `p` can paste but the
+# system clipboard never sees. Bind y and mirror the yank outward, so it behaves
+# like nvim with clipboard=unnamedplus.
+_clip_copy() {
+  if command -v pbcopy >/dev/null 2>&1; then pbcopy
+  elif command -v wl-copy >/dev/null 2>&1; then wl-copy
+  elif command -v xclip >/dev/null 2>&1; then xclip -selection clipboard
+  else cat >/dev/null
+  fi
+}
+
+_vi_yank_clip() {
+  zle vi-yank
+  printf '%s' "$CUTBUFFER" | _clip_copy
+}
+zle -N _vi_yank_clip
+
+_vi_yank_line_clip() {
+  zle vi-yank-whole-line
+  printf '%s' "$CUTBUFFER" | _clip_copy
+}
+zle -N _vi_yank_line_clip
+
+bindkey -M visual 'y' _vi_yank_clip      # V, motion, y  -> selection
+bindkey -M vicmd  'Y' _vi_yank_line_clip # Y             -> whole line
+
+# Paste from the system clipboard instead of zsh's internal cutbuffer, so p
+# pairs with the y above. Load the clipboard into CUTBUFFER, then let the stock
+# widget do the actual insertion and cursor placement.
+_clip_paste() {
+  if command -v pbpaste >/dev/null 2>&1; then pbpaste
+  elif command -v wl-paste >/dev/null 2>&1; then wl-paste --no-newline
+  elif command -v xclip >/dev/null 2>&1; then xclip -selection clipboard -o
+  fi
+}
+
+_vi_put_after_clip()  { CUTBUFFER="$(_clip_paste)"; zle vi-put-after; }
+_vi_put_before_clip() { CUTBUFFER="$(_clip_paste)"; zle vi-put-before; }
+_put_replace_clip()   { CUTBUFFER="$(_clip_paste)"; zle put-replace-selection; }
+zle -N _vi_put_after_clip
+zle -N _vi_put_before_clip
+zle -N _put_replace_clip
+
+bindkey -M vicmd  'p' _vi_put_after_clip   # p -> paste clipboard after cursor
+bindkey -M vicmd  'P' _vi_put_before_clip  # P -> paste clipboard before cursor
+bindkey -M visual 'p' _put_replace_clip    # p -> replace selection with clipboard
 
 # fzf keybindings/completion (safe)
 if command -v fzf >/dev/null 2>&1; then
@@ -149,12 +199,41 @@ export PATH="$HOME/.local/bin/mine:$PATH"
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 export PATH="$HOME/.local/bin:$PATH"
 
+# nvm: put the default version's bin directly on PATH. Sourcing nvm.sh costs
+# ~0.6s and `nvm use` another ~0.7s, which is too much to pay in every shell --
+# and sourcing alone selects no version, so node would fall through to whatever
+# else is on PATH (Homebrew ships a much newer major). Read the default alias
+# and prepend; the nvm function itself loads lazily on first call below.
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/alias/default" ]; then
+  _nvm_ver="$(<"$NVM_DIR/alias/default")"
+  _nvm_bin="$NVM_DIR/versions/node/v${_nvm_ver#v}/bin"
+  [ -d "$_nvm_bin" ] && export PATH="$_nvm_bin:$PATH"
+  unset _nvm_ver _nvm_bin
+fi
+
+# Real nvm on demand: load it, remove this shim, re-dispatch. Note the fast path
+# above only understands a plain version in alias/default -- if you set it to
+# something like `lts/*`, run `nvm use` once in the shell instead.
+nvm() {
+  unset -f nvm
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  nvm "$@"
+}
+
 # mise: node, go, zig, tree-sitter, claude, herdr (see ~/.config/mise/config.toml)
 if command -v mise >/dev/null 2>&1; then
   eval "$(mise activate zsh)"
 fi
 
 command -v go >/dev/null 2>&1 && export PATH="$PATH:$(go env GOPATH)/bin"
+
+# Dart/Flutter global binaries
+[ -d "$HOME/.pub-cache/bin" ] && export PATH="$PATH:$HOME/.pub-cache/bin"
+
+# Per-directory environments
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # Secrets and machine-only settings. Lives outside the repo, so never committed.
 if [ -f "$HOME/.zshrc.local" ]; then
@@ -167,3 +246,4 @@ fi
 if [ -n "$REX_BIN_DIR" ]; then
     export PATH="$REX_BIN_DIR:$PATH"
 fi
+export NODE_EXTRA_CA_CERTS="/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"

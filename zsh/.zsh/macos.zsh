@@ -9,6 +9,10 @@ for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew; do
 done
 unset brew_bin
 
+# Ghostty ships its CLI inside the app bundle, not on PATH.
+[ -d "/Applications/Ghostty.app/Contents/MacOS" ] && \
+  export PATH="$PATH:/Applications/Ghostty.app/Contents/MacOS"
+
 # Work laptop SDKs
 [ -f "/Users/bravo/.config/bread-machine-a72fa-6bbf07870e8b.json" ] && export GOOGLE_APPLICATION_CREDENTIALS="/Users/bravo/.config/bread-machine-a72fa-6bbf07870e8b.json"
 [ -d /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home ] && export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
