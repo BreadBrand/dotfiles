@@ -160,3 +160,10 @@ command -v go >/dev/null 2>&1 && export PATH="$PATH:$(go env GOPATH)/bin"
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
 fi
+
+# Rex prepends its own rex binary to PATH before our startup files run, so anything
+# above that rebuilds or reorders PATH can drop it or shadow it with another copy.
+# Re-prepend it last. Outside Rex the variable is empty and this is a no-op.
+if [ -n "$REX_BIN_DIR" ]; then
+    export PATH="$REX_BIN_DIR:$PATH"
+fi
