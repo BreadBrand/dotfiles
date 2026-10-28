@@ -246,4 +246,3 @@ fi
 if [ -n "$REX_BIN_DIR" ]; then
     export PATH="$REX_BIN_DIR:$PATH"
 fi
-export NODE_EXTRA_CA_CERTS="/Library/Application Support/Netskope/STAgent/data/nscacert_combined.pem"
