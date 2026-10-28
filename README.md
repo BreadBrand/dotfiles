@@ -11,6 +11,7 @@ folder is a [GNU Stow](https://www.gnu.org/software/stow/) package symlinked int
 | `ghostty`  | terminal                                        |
 | `git`      | `.gitconfig`                                    |
 | `mise`     | node, go, zig, tree-sitter, claude, herdr       |
+| `rex`      | Rex multiplexer keybinds + actions (macOS only) |
 
 ## New machine
 

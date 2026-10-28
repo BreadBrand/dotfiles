@@ -2,6 +2,12 @@
 
 STOW_PACKAGES=(zsh nvim starship ghostty git mise)
 
+# macOS-only packages. Rex is an Apple-only beta, so stowing it on Arch would leave a
+# dead ~/.config/rex pointing at config for an app that can't be installed there.
+case "$(uname -s)" in
+  Darwin) STOW_PACKAGES+=(rex) ;;
+esac
+
 # Stow one package into ~. Real files blocking a link get moved to <file>.bak-<timestamp>
 # first. Omarchy migrations edit configs with `sed -i`, which replaces our symlinks with
 # regular files, so this happens on existing machines too, not just fresh installs.
